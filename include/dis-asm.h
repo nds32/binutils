@@ -277,6 +277,7 @@ extern int print_insn_mn10300		(bfd_vma, disassemble_info *);
 extern int print_insn_moxie		(bfd_vma, disassemble_info *);
 extern int print_insn_msp430		(bfd_vma, disassemble_info *);
 extern int print_insn_mt                (bfd_vma, disassemble_info *);
+extern int print_insn_nds32		(bfd_vma, disassemble_info *);
 extern int print_insn_ns32k		(bfd_vma, disassemble_info *);
 extern int print_insn_openrisc		(bfd_vma, disassemble_info *);
 extern int print_insn_pdp11		(bfd_vma, disassemble_info *);

@@ -79,6 +79,7 @@ HFILES = \
 	mep-desc.h mep-opc.h \
 	microblaze-opc.h \
 	mt-desc.h mt-opc.h \
+	nds32-desc.h nds32-opc.h \
 	openrisc-desc.h openrisc-opc.h \
 	score-opc.h \
 	sh-opc.h \
@@ -206,6 +207,12 @@ TARGET_LIBOPCODES_CFILES = \
 	mt-dis.c \
 	mt-ibld.c \
 	mt-opc.c \
+	nds32-asm.c \
+	nds32-desc.c \
+	nds32-dis.c \
+	nds32-ibld.c \
+	nds32-opc.c \
+	nds32-opinst.c \
 	nios2-dis.c \
 	nios2-opc.c \
 	ns32k-dis.c \
@@ -352,7 +359,7 @@ po/POTFILES.in: @MAINT@ Makefile
 
 CLEANFILES = \
 	stamp-epiphany stamp-fr30 stamp-frv stamp-ip2k stamp-iq2000 stamp-lm32 \
-	stamp-m32c stamp-m32r stamp-mep stamp-mt \
+	stamp-m32c stamp-m32r stamp-mep stamp-mt stamp-nds32 \
 	stamp-openrisc stamp-xc16x stamp-xstormy16 \
 	libopcodes.a stamp-lib
 
@@ -369,7 +376,7 @@ CGENDEPS = \
 	$(CGENDIR)/opc-opinst.scm \
 	cgen-asm.in cgen-dis.in cgen-ibld.in
 
-CGEN_CPUS = epiphany fr30 frv ip2k iq2000 lm32 m32c m32r mep mt openrisc xc16x xstormy16
+CGEN_CPUS = epiphany fr30 frv ip2k iq2000 lm32 m32c m32r mep mt nds32 openrisc xc16x xstormy16
 
 if CGEN_MAINT
 EPIPHANY_DEPS = stamp-epiphany
@@ -382,6 +389,7 @@ M32C_DEPS = stamp-m32c
 M32R_DEPS = stamp-m32r
 MEP_DEPS = stamp-mep
 MT_DEPS = stamp-mt
+NDS32_DEPS = stamp-nds32
 OPENRISC_DEPS = stamp-openrisc
 XC16X_DEPS = stamp-xc16x
 XSTORMY16_DEPS = stamp-xstormy16
@@ -489,6 +497,13 @@ stamp-mt: $(CGENDEPS) $(CPUDIR)/mt.cpu $(CPUDIR)/mt.opc
 	$(MAKE) run-cgen arch=mt prefix=mt options= \
 		archfile=$(CPUDIR)/mt.cpu \
 		opcfile=$(CPUDIR)/mt.opc extrafiles=
+
+$(srcdir)/nds32-desc.h $(srcdir)/nds32-desc.c $(srcdir)/nds32-opc.h $(srcdir)/nds32-opc.c $(srcdir)/nds32-ibld.c $(srcdir)/nds32-opinst.c $(srcdir)/nds32-asm.c $(srcdir)/nds32-dis.c: $(NDS32_DEPS)
+	@true
+stamp-nds32: $(CGENDEPS) $(CGENDIR)/cpu/nds32.cpu $(CGENDIR)/cpu/nds32p.cpu $(CGENDIR)/cpu/nds16.cpu $(CGENDIR)/cpu/nds32pc.cpu $(CGENDIR)/cpu/andes.inc $(CGENDIR)/cpu/simplify.inc $(CGENDIR)/cpu/nds32.opc
+	$(MAKE) run-cgen arch=nds32 prefix=nds32 options=opinst \
+		archfile=$(CGENDIR)/cpu/nds32.cpu \
+		opcfile=$(CGENDIR)/cpu/nds32.opc extrafiles=opinst
 
 $(srcdir)/openrisc-desc.h $(srcdir)/openrisc-desc.c $(srcdir)/openrisc-opc.h $(srcdir)/openrisc-opc.c $(srcdir)/openrisc-ibld.c $(srcdir)/openrisc-asm.c $(srcdir)/openrisc-dis.c: $(OPENRISC_DEPS)
 	@true

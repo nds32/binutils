@@ -363,6 +363,10 @@ changequote([,])dnl
         using_cgen=yes
 	;;
 
+      nds32)
+        using_cgen=yes
+	;;
+
       i386 | s390 | sparc)
 	if test $this_target = $target ; then
 	  AC_DEFINE_UNQUOTED(DEFAULT_ARCH, "${arch}", [Default architecture.])
@@ -499,6 +503,7 @@ esac
 cgen_cpu_prefix=""
 if test $using_cgen = yes ; then
   case ${target_cpu} in
+    nds32*)  cgen_cpu_prefix="nds32" ;;
     *) cgen_cpu_prefix=${target_cpu} ;;
   esac
   AC_SUBST(cgen_cpu_prefix)
